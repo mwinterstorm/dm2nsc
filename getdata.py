@@ -113,6 +113,12 @@ def get_last_nightscout():
 		js = last.json()
 		if len(js) > 0:
 			return arrow.get(js[0]['created_at']).datetime
+	else:
+		last = requests.get(NS_URL + 'api/v1/treatments?count=10')
+		if last.status_code == 200:
+			js = last.json()
+			if len(js) > 0:
+				return arrow.get(js[0]['created_at']).datetime
 
 def main():
 	print("Logging in to Diabetes-M...", datetime.datetime.now())
